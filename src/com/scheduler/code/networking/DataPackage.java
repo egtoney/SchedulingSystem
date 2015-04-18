@@ -31,11 +31,13 @@ public class DataPackage {
 			
 			LinkedList<Double> availability = parseAvailability(field_array[10]);
 			
-			Boolean[] ask_offs = parseAskOffDays(field_array[11]);
-			for(int j = 0; j < ask_offs.length; j++) {
-				if(ask_offs[j]) {
-					availability.set(j*2, 0.0); 
-					availability.set(j*2+1, 0.0);
+			if(field_array[11] != "none") {
+				Boolean[] ask_offs = parseAskOffDays(field_array[11]);
+				for(int j = 0; j < ask_offs.length; j++) {
+					if(ask_offs[j]) {
+						availability.set(j*2, 0.0); 
+						availability.set(j*2+1, 0.0);
+					}
 				}
 			}
 			
@@ -94,15 +96,13 @@ public class DataPackage {
 		
 		int this_monday = c.get(Calendar.DAY_OF_YEAR);
 		int sunday = this_monday+6;
-		System.out.println(this_monday);
-		System.out.println(sunday);
         
 		for(String s : aod.split(",")) {
 			int day_of_year = getDayOfYear(s);
 			
-			System.out.println(day_of_year);
+			
 			if(day_of_year >= this_monday && day_of_year <= sunday) {
-				System.out.println(day_of_year-this_monday);
+				
 				a_o_d[day_of_year-this_monday] = true;
 			}
 			
@@ -115,8 +115,11 @@ public class DataPackage {
 		System.out.println(dateString);
 			String[] date = dateString.split("_");
 			Calendar c = Calendar.getInstance();
-			c.set(Integer.parseInt(date[2]), Integer.parseInt(date[0])-1, Integer.parseInt(date[1]));
-			return c.get(Calendar.DAY_OF_YEAR);
+			if(date.length == 3) {
+				c.set(Integer.parseInt(date[2]), Integer.parseInt(date[0])-1, Integer.parseInt(date[1]));
+				return c.get(Calendar.DAY_OF_YEAR);
+			}
+			else return c.get(Calendar.DAY_OF_YEAR);
 		}
 	
 	public LinkedList<Employee> getEmployeeList() {
