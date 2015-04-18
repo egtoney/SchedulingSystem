@@ -47,7 +47,7 @@ public class DataPackage {
 			double pay_rate = Double.parseDouble(field_array[2]);
 			String DOB = field_array[3];
 			String SSN = field_array[4];
-			String address = field_array[5]+" "+field_array[6]+" "+field_array[7]+" "+field_array[8];
+			String address = field_array[5]+"_"+field_array[6]+"_"+field_array[7]+"_"+field_array[8];
 			
 			LinkedList<String> positions = new LinkedList<>();
 			for(String s : field_array[9].split(",")) {
@@ -65,8 +65,9 @@ public class DataPackage {
 			}
 			
 			String phone_number = field_array[12];
+			String username = field_array[13];
 			
-			Employee new_employee = new Employee(name, DOB, SSN, address, pay_rate, availability, positions, preferred_hours, phone_number);
+			Employee new_employee = new Employee(name, DOB, SSN, address, pay_rate, availability, positions, preferred_hours, phone_number, username, "");
 			employee_list.add(new_employee);
 		}
 		this.employee_list = employee_list;

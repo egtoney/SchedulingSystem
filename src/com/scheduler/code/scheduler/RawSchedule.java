@@ -283,7 +283,7 @@ public class RawSchedule extends JTabbedPane{
 
 				String name = slot.getName();
 				String position = " ("+slot.getPosition()+")";
-				int string_width = fm.stringWidth(text);
+				int string_width = fm.stringWidth(position);
 				double total_time = slot.getEnd()-slot.getBegin();
 				int graphic_width = (int) (TABLE_WIDTH * total_time);
 				int left_x = (int) (TABLE_WIDTH * (slot.getBegin()+1));
@@ -292,7 +292,7 @@ public class RawSchedule extends JTabbedPane{
 				g.fillRect(left_x, row*TABLE_HEIGHT, graphic_width, TABLE_HEIGHT);
 				
 				g.setColor(Color.black);
-				g.drawString(name, x, y);
+				//g.drawString(name, x, y);
 				g.drawString(position, left_x+(graphic_width-string_width)/2, (row+1)*TABLE_HEIGHT-9);
 			
 				row++;

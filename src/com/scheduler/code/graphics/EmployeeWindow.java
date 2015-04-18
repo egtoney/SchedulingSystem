@@ -1,6 +1,7 @@
 package com.scheduler.code.graphics;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -9,9 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -20,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
 
 import com.scheduler.code.employees.Employee;
@@ -31,81 +36,290 @@ public class EmployeeWindow extends JFrame{
 	 */
 	private static final long serialVersionUID = -8525299699136290656L;
 	private JFrame parent;
+	private LinkedList<Employee> employee_list = new LinkedList<>();
 	
 	public static void main(String[] args) {
 		JFrame derp = new JFrame();
+		LinkedList<Employee> e_list = new LinkedList<>();
+		LinkedList<Double> availability = new LinkedList<>();
+		LinkedList<String> positions = new LinkedList<>();
+		e_list.add(new Employee("A", "blank", "blank", "blank", 99.99, availability, positions, 40, "606-879-6300", "", ""));
 		derp.setVisible(true);
-		new EmployeeWindow(derp);
+		new EmployeeWindow(derp, e_list);
 	}
-	public EmployeeWindow(JFrame frame, Employee e) {
-		this(frame);
+	public EmployeeWindow(JFrame frame, LinkedList<Employee> employee_list, Employee e) {
+		this(frame, employee_list);
 	}
 	
-	public EmployeeWindow(JFrame frame) {
+	public EmployeeWindow(JFrame frame, final LinkedList<Employee> e_l) {
 		super("Employee Edit Manager");
 		
 		parent = frame;
+		employee_list = e_l;
 		frame.setEnabled(false);
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
-		String[] labels = {"First: ", "Last: ", "Middle: ", "DOB (mm/dd/yyyy): ", "/", "/", "SSN: ", "-", "-", "Phone Number: ", "-", "-", "Address: ", "City: ", "State: ", "Zip: ", "Pay Rate: "};
+		String[] labels = {"First: ", "Last: ", "Middle: ", "DOB (mm/dd/yyyy): ", "/", "/", "SSN: ", "-", "-", "Phone Number: ", "-", "-", "Address: ", "City: ", "State: ", "Zip: ", "Pay Rate (99.99): ", "Preferred Hours (99);"};
+		String[] available_hours = new String[48];
+		Double[] available_hours_mirror = new Double[48];
+		for(int i = 0; i < 24; i++) {
+			available_hours[i*2] = Integer.toString(i)+":00";
+			available_hours[i*2+1] = Integer.toString(i)+":30";
+			available_hours_mirror[i*2+1] = (double) i;
+			available_hours_mirror[i*2+1] = (double) i + 0.5;
+		}
 		int label_length = labels.length;
 		Font font = new Font("Lucida Sans Unicode", Font.PLAIN, 15);
 		
 		JPanel content = new JPanel(new BorderLayout());
 		
 		// Left Column
-		JPanel left_col = new JPanel();
+		JPanel left_col = new JPanel(new BorderLayout());
 		
-		content.add(left_col, BorderLayout.LINE_START);
+		String[] names = new String[employee_list.size()];
+		int i = 0;
+		for(Employee e : employee_list) {
+			names[i] = (e.getName());
+			i++;
+		}
+		Arrays.sort(names);
+		final DefaultListModel<String> model = new DefaultListModel<>();
+		final JList<String> list = new JList<>(model);
+		for(String s : names) {
+			model.addElement(s);
+		}
+		left_col.add(list);
 		
-		// RIght Column
+		content.add(left_col, BorderLayout.CENTER);
+		
+		// Right Column
 		JPanel right_col = new JPanel(new GridLayout(0,1));
 		
-			JPanel row1 = new JPanel(new FlowLayout());
+			JPanel row1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 				JLabel l1 = new JLabel(labels[0]);
-				JTextField first_name = new JTextField();
+				final JTextField first_name = new JTextField();
 				first_name.setPreferredSize(new Dimension(100,25));
 				row1.add(l1);
 				row1.add(first_name);
 				
 				JLabel l2 = new JLabel(labels[1]);
-				JTextField last_name = new JTextField();
+				final JTextField last_name = new JTextField();
 				last_name.setPreferredSize(new Dimension(100,25));
 				row1.add(l2);
 				row1.add(last_name);
 				
 				JLabel l3 = new JLabel(labels[2]);
-				JTextField middle_name = new JTextField();
+				final JTextField middle_name = new JTextField();
 				middle_name.setPreferredSize(new Dimension(100,25));
 				row1.add(l3);
 				row1.add(middle_name);
 			
 			right_col.add(row1);
 			
-			JPanel row2 = new JPanel(new FlowLayout());
+			JPanel row2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 				JLabel l4 = new JLabel(labels[3]);
-				JTextField birth_month = new JTextField();
+				final JTextField birth_month = new JTextField();
 				birth_month.setPreferredSize(new Dimension(100,25));
 				row2.add(l4);
 				row2.add(birth_month);
 				
 				JLabel l5 = new JLabel(labels[4]);
-				JTextField birth_day = new JTextField();
+				final JTextField birth_day = new JTextField();
 				birth_day.setPreferredSize(new Dimension(100,25));
 				row2.add(l5);
 				row2.add(birth_day);
 				
 				JLabel l6 = new JLabel(labels[5]);
-				JTextField birth_year = new JTextField();
+				final JTextField birth_year = new JTextField();
 				birth_year.setPreferredSize(new Dimension(100,25));
 				row2.add(l6);
 				row2.add(birth_year);
 		
 			right_col.add(row2);
+			
+			JPanel row3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+				JLabel l7 = new JLabel(labels[6]);
+				final JTextField SSN1 = new JTextField();
+				SSN1.setPreferredSize(new Dimension(100,25));
+				row3.add(l7);
+				row3.add(SSN1);
+				
+				JLabel l8 = new JLabel(labels[7]);
+				final JTextField SSN2 = new JTextField();
+				SSN2.setPreferredSize(new Dimension(100,25));
+				row3.add(l8);
+				row3.add(SSN2);
+				
+				JLabel l9 = new JLabel(labels[8]);
+				final JTextField SSN3 = new JTextField();
+				SSN3.setPreferredSize(new Dimension(100,25));
+				row3.add(l9);
+				row3.add(SSN3);
+	
+			right_col.add(row3);
+			
+			JPanel row4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+				JLabel l10 = new JLabel(labels[9]);
+				final JTextField P1 = new JTextField();
+				P1.setPreferredSize(new Dimension(100,25));
+				row4.add(l10);
+				row4.add(P1);
+				
+				JLabel l11 = new JLabel(labels[10]);
+				final JTextField P2 = new JTextField();
+				P2.setPreferredSize(new Dimension(100,25));
+				row4.add(l11);
+				row4.add(P2);
+				
+				JLabel l12 = new JLabel(labels[11]);
+				final JTextField P3 = new JTextField();
+				P3.setPreferredSize(new Dimension(100,25));
+				row4.add(l12);
+				row4.add(P3);
+	
+			right_col.add(row4);
+			
+			JPanel row5 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+				JLabel l13 = new JLabel(labels[12]);
+				final JTextField address = new JTextField();
+				address.setPreferredSize(new Dimension(100,25));
+				row5.add(l13);
+				row5.add(address);
+				
+				JLabel l14 = new JLabel(labels[13]);
+				final JTextField city = new JTextField();
+				city.setPreferredSize(new Dimension(100,25));
+				row5.add(l14);
+				row5.add(city);
+				
+				JLabel l15 = new JLabel(labels[14]);
+				final JTextField state = new JTextField();
+				state.setPreferredSize(new Dimension(100,25));
+				row5.add(l15);
+				row5.add(state);
+	
+			right_col.add(row5);
+			
+			JPanel row6 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			
+				JLabel l16 = new JLabel(labels[15]);
+				final JTextField zip = new JTextField();
+				zip.setPreferredSize(new Dimension(100,25));
+				row6.add(l16);
+				row6.add(zip);
+				
+				JLabel l17 = new JLabel(labels[16]);
+				final JTextField pay_rate = new JTextField();
+				pay_rate.setPreferredSize(new Dimension(100,25));
+				row6.add(l17);
+				row6.add(pay_rate);
+				
+				JLabel l18 = new JLabel(labels[17]);
+				final JTextField preferred_hours = new JTextField();
+				preferred_hours.setPreferredSize(new Dimension(100,25));
+				row6.add(l18);
+				row6.add(preferred_hours);
+	
+			right_col.add(row6);
+			
+			//Combo boxes
+			JPanel row7 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			
+				JLabel m = new JLabel("Monday: ");
+				final JComboBox<String> m_begin = new JComboBox<>(available_hours);
+				JLabel to = new JLabel("to");
+				final JComboBox<String> m_end = new JComboBox<>(available_hours);
+				row7.add(m);
+				row7.add(m_begin);
+				row7.add(to);
+				row7.add(m_end);
+				
+			right_col.add(row7);
+			
+			JPanel row8 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			
+				JLabel t = new JLabel("Tuesday: ");
+				final JComboBox<String> t_begin = new JComboBox<>(available_hours);
+				JLabel to1 = new JLabel("to");
+				final JComboBox<String> t_end = new JComboBox<>(available_hours);
+				row8.add(t);
+				row8.add(t_begin);
+				row8.add(to1);
+				row8.add(t_end);
+				
+			right_col.add(row8);
+			
+			JPanel row9 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			
+				JLabel w = new JLabel("Wednesday: ");
+				final JComboBox<String> w_begin = new JComboBox<>(available_hours);
+				JLabel to2 = new JLabel("to");
+				final JComboBox<String> w_end = new JComboBox<>(available_hours);
+				row9.add(w);
+				row9.add(w_begin);
+				row9.add(to2);
+				row9.add(w_end);
+				
+			right_col.add(row9);
+			
+			JPanel row10 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			
+				JLabel r = new JLabel("Thursday: ");
+				final JComboBox<String> r_begin = new JComboBox<>(available_hours);
+				JLabel to3 = new JLabel("to");
+				final JComboBox<String> r_end = new JComboBox<>(available_hours);
+				row10.add(r);
+				row10.add(r_begin);
+				row10.add(to3);
+				row10.add(r_end);
+				
+			right_col.add(row10);
+			
+			JPanel row11 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			
+				JLabel f = new JLabel("Friday: ");
+				final JComboBox<String> f_begin = new JComboBox<>(available_hours);
+				JLabel to4 = new JLabel("to");
+				final JComboBox<String> f_end = new JComboBox<>(available_hours);
+				row11.add(f);
+				row11.add(f_begin);
+				row11.add(to4);
+				row11.add(f_end);
+				
+			right_col.add(row11);
+			
+			JPanel row12 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			
+				JLabel s = new JLabel("Saturday: ");
+				final JComboBox<String> s_begin = new JComboBox<>(available_hours);
+				JLabel to5 = new JLabel("to");
+				final JComboBox<String> s_end = new JComboBox<>(available_hours);
+				row12.add(s);
+				row12.add(s_begin);
+				row12.add(to5);
+				row12.add(s_end);
+				
+			right_col.add(row12);
+		
+			JPanel row13 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			
+				JLabel su = new JLabel("Sunday: ");
+				final JComboBox<String> su_begin = new JComboBox<>(available_hours);
+				JLabel to6 = new JLabel("to");
+				final JComboBox<String> su_end = new JComboBox<>(available_hours);
+				row13.add(su);
+				row13.add(su_begin);
+				row13.add(to6);
+				row13.add(su_end);
+				
+			right_col.add(row13);
+
 			
 		content.add(right_col, BorderLayout.LINE_END);
 		
@@ -176,9 +390,108 @@ public class EmployeeWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				String name = list.getSelectedValue().toString();
+				for(Employee emp : employee_list) {
+					if(emp.getName() == name) {
+						employee_list.remove(emp);
+					}
+				}
+				model.removeElementAt(list.getSelectedIndex());
 			}
-			
+		});
+		add.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				boolean good = true;
+				if(last_name.getText().isEmpty()){
+					good = false;
+					last_name.setBackground(Color.red);
+				}
+				if(first_name.getText().isEmpty()){
+					good = false;
+					first_name.setBackground(Color.red);
+				}
+				if(middle_name.getText().isEmpty()){
+					good = false;
+					middle_name.setBackground(Color.red);
+				}
+				if(birth_month.getText().isEmpty()){
+					good = false;
+					birth_month.setBackground(Color.red);
+				}
+				if(birth_day.getText().isEmpty()){
+					good = false;
+					birth_day.setBackground(Color.red);
+				}
+				if(birth_year.getText().isEmpty()){
+					good = false;
+					birth_year.setBackground(Color.red);
+				}
+				if(SSN1.getText().isEmpty()){
+					good = false;
+					SSN1.setBackground(Color.red);
+				}
+				if(SSN2.getText().isEmpty()){
+					good = false;
+					SSN2.setBackground(Color.red);
+				}
+				if(SSN3.getText().isEmpty()){
+					good = false;
+					SSN3.setBackground(Color.red);
+				}
+				if(address.getText().isEmpty()){
+					good = false;
+					address.setBackground(Color.red);
+				}
+				if(city.getText().isEmpty()){
+					good = false;
+					city.setBackground(Color.red);
+				}
+				if(state.getText().isEmpty()){
+					good = false;
+					state.setBackground(Color.red);
+				}
+				if(zip.getText().isEmpty()){
+					good = false;
+					zip.setBackground(Color.red);
+				}
+				if(P1.getText().isEmpty()){
+					good = false;
+					P1.setBackground(Color.red);
+				}
+				if(P2.getText().isEmpty()){
+					good = false;
+					P2.setBackground(Color.red);
+				}
+				if(P3.getText().isEmpty()){
+					good = false;
+					P3.setBackground(Color.red);
+				}
+				if(city.getText().isEmpty()){
+					good = false;
+					city.setBackground(Color.red);
+				}
+				if(state.getText().isEmpty()){
+					good = false;
+					state.setBackground(Color.red);
+				}
+					if(good) { 
+						String name = last_name.getText()+"_"+first_name.getText()+"_"+middle_name.getText();
+						String DOB = birth_month.getText()+"_"+birth_day.getText()+"_"+birth_year.getText();
+						String SSN = SSN1.getText()+"_"+SSN2.getText()+"_"+SSN3.getText();
+						String s_address = address.getText()+"_"+city.getText()+"_"+state.getText()+"_"+zip.getText();
+						String phone_number = P1.getText()+P2.getText()+P3.getText();
+						double d_pay_rate = Double.parseDouble(pay_rate.getText());
+						double d_preferred_hours = Double.parseDouble(preferred_hours.getText());
+						LinkedList<Double> availability = new LinkedList<>();
+						LinkedList<String> positions = new LinkedList<>();
+						String username = "";
+						String password = "";
+						Employee new_employee = new Employee(name, DOB, SSN, s_address, d_pay_rate, availability, positions, d_preferred_hours, phone_number, password, username);
+					}
+			}
 		});
 	}
 	
