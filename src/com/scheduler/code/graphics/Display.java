@@ -2,6 +2,9 @@ package com.scheduler.code.graphics;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -56,6 +59,17 @@ public class Display extends JPanel{
 	
 		setRoom(LOGIN_SCREEN);
 	}
+	
+	@Override
+	public void paint(Graphics g){
+		Graphics2D g2 = (Graphics2D)g;
+	    RenderingHints rh = new RenderingHints(
+	             RenderingHints.KEY_TEXT_ANTIALIASING,
+	             RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+	    g2.setRenderingHints(rh);
+	    
+	    super.paint(g2);
+	}
 
 	public void onLogin(Networking connection) {
 		//load data
@@ -68,13 +82,13 @@ public class Display extends JPanel{
 		setRoom(MAIN_DISPLAY);
 	}
 	
-	void setRoom(int room){
+	private void setRoom(int room){
 		closeRoom(room);
 		openRoom(room);
-		curr_room = LOGIN_SCREEN;
+		curr_room = room;
 	}
 	
-	void closeRoom(int new_room){
+	private void closeRoom(int new_room){
 		if(curr_room != new_room){
 			//remove current room
 			for(JPanel panel : room_contense){
@@ -83,7 +97,7 @@ public class Display extends JPanel{
 		}
 	}
 	
-	void openRoom(int room){
+	private void openRoom(int room){
 		if(room != curr_room){
 			switch(room){
 			case(LOGIN_SCREEN):
@@ -104,7 +118,7 @@ public class Display extends JPanel{
 	 * Is used to initialize the main display since this is a large amount
 	 * of code it was separated from the switch statement in setRoom()
 	 */
-	void createMainDisplay(){
+	private void createMainDisplay(){
 		//First make the menu bar
 		JMenuBar menu = new JMenuBar();
 		
