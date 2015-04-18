@@ -36,9 +36,13 @@ public class LoginScreen extends JPanel{
 		this.parent = parent;
 		
 		JPanel content = new JPanel(new GridLayout(0,2));
-		content.add(new JLabel("Username"));
+		JLabel l1 = new JLabel("Username");
+		l1.setHorizontalAlignment(JLabel.CENTER);
+		content.add(l1);
 		content.add(username);
-		content.add(new JLabel("Password"));
+		JLabel l2 = new JLabel("Password");
+		l2.setHorizontalAlignment(JLabel.CENTER);
+		content.add(l2);
 		content.add(password);
 		
 		password.addKeyListener(new KeyListener(){

@@ -46,7 +46,7 @@ public class Networking {
 		
 		String avaiability = "";
 		boolean toggle = true;
-		boolean first = true;
+		first = true;
 		for(double s : e.getAvailability()){
 			if(!first){
 				if(toggle){
@@ -67,6 +67,9 @@ public class Networking {
 				+ "n_ph="+e.getPreferredHours()+"&n_pr="+e.getPayRate()+"&n_dob="+e.getDOB()+"&n_ssn="+e.getSSN()+"&"
 				+ "n_a="+add[0]+"&n_c="+add[1]+"&n_s="+add[2]+"&n_z="+add[3]+"&n_pn="+e.getPhoneNumber()+"&n_pos="+positions+"&"
 				+ "n_ava="+avaiability+"&n_aod=none";
+		
+		String result = httpRequest(request);
+		return (result.charAt(0) == '1') ? true : false;
 	}
 	
 	public static boolean attemptLogin(String username, char[] cs){
