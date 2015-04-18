@@ -36,7 +36,7 @@ public class ScheduleScreen extends JPanel implements MouseListener, MouseMotion
 	
 	private RawSchedule running_schedule;
 	
-	public ScheduleScreen(RawSchedule running_schedule, final DataPackage dp){
+	public ScheduleScreen(final RawSchedule running_schedule, final DataPackage dp){
 		super(new BorderLayout());
 		
 		this.running_schedule = running_schedule;
@@ -75,8 +75,8 @@ public class ScheduleScreen extends JPanel implements MouseListener, MouseMotion
 					Rectangle rect = elPane.getBounds();
 					mouse_loc.x += rect.x;
 					if(!rect.contains(mouse_loc)){
-						//TODO
-						System.out.println("Dropped "+dp.getEmployeeList().get(employee_focus).getName()+" on the schedule at "+mouse_loc);
+						//TODO 
+						running_schedule.mouseDrop(mouse_loc, dp.getEmployeeList().get(employee_focus));
 					}
 				}
 				employee_focus = -1;

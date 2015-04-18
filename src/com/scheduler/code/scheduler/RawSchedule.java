@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Insets;
+import java.awt.Point;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Set;
@@ -314,6 +316,17 @@ public class RawSchedule extends JTabbedPane{
 			}
 		}
 	
+	}
+
+	public void mouseDrop(Point mouse_loc, Employee employee) {
+		Insets in = new Insets(24, 4, 24, 4);
+		mouse_loc.x -= in.left;
+		mouse_loc.y -= in.top;
+		
+		System.out.println("Dropped "+employee.getName()+" on the schedule at "+mouse_loc);
+		
+		// TODO Auto-generated method stub
+		
 	}
 
 }
