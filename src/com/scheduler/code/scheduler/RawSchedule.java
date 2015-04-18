@@ -113,6 +113,10 @@ public class RawSchedule extends JTabbedPane{
 		initGUI();
 	}
 	
+	public void addTimeSlot(double lower, double higher, String position){
+		getDaysTimeSlots(this.getSelectedIndex()+1).add(new EmployeeTimeSlot("",lower,higher,position));
+	}
+	
 	private void initGUI(){
 		String tab_names[] = {"Sun","Mon","Tues","Wed","Thurs","Fri","Sat"};
 		for(int i=1 ; i<07 ; i++){

@@ -108,10 +108,7 @@ public class Display extends JPanel{
 		        
 				LoginScreen l_screen = new LoginScreen(this);
 				
-				JPanel p = new JPanel();
-				p.add(l_screen);
-			
-				room_contense.push(p);
+				room_contense.push(l_screen);
 				add(l_screen, BorderLayout.CENTER);
 				break;
 			case(MAIN_DISPLAY):
@@ -136,7 +133,7 @@ public class Display extends JPanel{
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					running_schedule
+					//running_schedule
 					// TODO Auto-generated method stub
 				}
 				
@@ -154,6 +151,17 @@ public class Display extends JPanel{
 			});
 			schedule.add(submit_schedule);
 		
+			JMenuItem timer_adder = new JMenuItem("Add Time Slot");
+			timer_adder.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					new TimingWindow(Display.this);
+				}
+				
+			});
+			schedule.add(timer_adder);
+		
 		menu.add(schedule);
 		
 		parent.setJMenuBar(menu);
@@ -163,6 +171,18 @@ public class Display extends JPanel{
 		
 		room_contense.push(scrn);
 		add(scrn, BorderLayout.CENTER);
+	}
+
+	//TODO
+	public void addTimeSlot(String text, String text2, String pos) {
+		try{
+			double d1, d2;
+			d1 = Double.parseDouble(text);
+			d2 = Double.parseDouble(text2);
+			running_schedule.addTimeSlot(d1, d2, pos);
+		}catch(Error e){
+			
+		}
 	}
 	
 }
