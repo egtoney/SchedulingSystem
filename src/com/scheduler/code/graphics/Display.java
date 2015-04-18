@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import com.scheduler.code.Main;
 import com.scheduler.code.networking.DataPackage;
 import com.scheduler.code.networking.Networking;
+import com.scheduler.code.scheduler.RawSchedule;
 
 public class Display extends JPanel{
 	
@@ -48,6 +49,8 @@ public class Display extends JPanel{
 	
 	//user data
 	private DataPackage data = null;
+
+	private RawSchedule running_schedule;
 	
 	public Display(Main m, JFrame p){
 		super(new BorderLayout());
@@ -76,7 +79,7 @@ public class Display extends JPanel{
 		data = connection.pullData();
 		
 		//TODO pass to classes that care
-		
+		running_schedule = new RawSchedule(data);
 		
 		//set display
 		setRoom(MAIN_DISPLAY);
@@ -151,7 +154,7 @@ public class Display extends JPanel{
 		parent.setJMenuBar(menu);
 		
 		// put all of the graphical interfaces on the pane
-		ScheduleScreen scrn = new ScheduleScreen(data);
+		ScheduleScreen scrn = new ScheduleScreen(running_schedule, data);
 		
 		room_contense.push(scrn);
 		add(scrn, BorderLayout.CENTER);

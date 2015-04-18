@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 
 import com.scheduler.code.employees.Employee;
 import com.scheduler.code.networking.DataPackage;
+import com.scheduler.code.scheduler.RawSchedule;
 
 public class ScheduleScreen extends JPanel implements MouseListener, MouseMotionListener{
 
@@ -31,12 +32,14 @@ public class ScheduleScreen extends JPanel implements MouseListener, MouseMotion
 	private JScrollPane elPane;
 	private EmployeeList el;
 	
-	private ScheduleDisplay sd;
 	private Point mouse_location;
 	
-	public ScheduleScreen(final DataPackage dp){
+	private RawSchedule running_schedule;
+	
+	public ScheduleScreen(RawSchedule running_schedule, final DataPackage dp){
 		super(new BorderLayout());
 		
+		this.running_schedule = running_schedule;
 		this.dp = dp;
 		
 		el = new EmployeeList(dp.getEmployeeList());
@@ -98,8 +101,7 @@ public class ScheduleScreen extends JPanel implements MouseListener, MouseMotion
 		});
 		add(elPane, BorderLayout.LINE_END);
 		
-		sd = new ScheduleDisplay();
-		add(sd, BorderLayout.LINE_START);
+		add(running_schedule, BorderLayout.CENTER);
 		
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -148,19 +150,6 @@ public class ScheduleScreen extends JPanel implements MouseListener, MouseMotion
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		mouse_location = arg0.getPoint();
-	}
-	
-	public static class ScheduleDisplay extends JPanel{
-		
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -4834420607249393667L;
-
-		public ScheduleDisplay(){
-			
-		}
-		
 	}
 	
 	public static class EmployeeList extends JPanel{

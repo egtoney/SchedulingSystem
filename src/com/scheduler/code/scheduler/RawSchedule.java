@@ -1,12 +1,23 @@
 package com.scheduler.code.scheduler;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Set;
 
-import com.scheduler.code.employees.Employee;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 
-public class RawSchedule {
+import com.scheduler.code.employees.Employee;
+import com.scheduler.code.networking.DataPackage;
+
+public class RawSchedule extends JTabbedPane{
 	
 	/*----------------DEBUG-------------*\
 	public static void main(String[] arg) {
@@ -63,6 +74,10 @@ public class RawSchedule {
 	}
 	*/
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 315191538193202318L;
 	private LinkedList<EmployeeTimeSlot> monday = new LinkedList<>();
 	private LinkedList<EmployeeTimeSlot> tuesday = new LinkedList<>();
 	private LinkedList<EmployeeTimeSlot> wednesday = new LinkedList<>();
@@ -71,7 +86,10 @@ public class RawSchedule {
 	private LinkedList<EmployeeTimeSlot> saturday = new LinkedList<>();
 	private LinkedList<EmployeeTimeSlot> sunday = new LinkedList<>();
 	
+	// constructor for predefined time slots
 	public RawSchedule(LinkedList<EmployeeTimeSlot> monday, LinkedList<EmployeeTimeSlot> tuesday, LinkedList<EmployeeTimeSlot> wednesday, LinkedList<EmployeeTimeSlot> thursday, LinkedList<EmployeeTimeSlot> friday, LinkedList<EmployeeTimeSlot> saturday, LinkedList<EmployeeTimeSlot> sunday) {
+		super();
+		
 		this.monday = monday;
 		this.tuesday = tuesday;
 		this.wednesday = wednesday;
@@ -79,8 +97,29 @@ public class RawSchedule {
 		this.friday = friday;
 		this.saturday = saturday;
 		this.sunday = sunday;
+		
+		initGUI();
 	}
 	
+	// constructor for new time slots
+	public RawSchedule(DataPackage data) {
+		super();
+
+		monday.add(new EmployeeTimeSlot("Ethan Toney",1.5,5.5,"Cook"));
+		monday.add(new EmployeeTimeSlot("Ethan Toney",5.5,7.0,"Cook 2.0"));
+		
+		initGUI();
+	}
+	
+	private void initGUI(){
+		String tab_names[] = {"Sun","Mon","Tues","Wed","Thurs","Fri","Sat"};
+		for(int i=1 ; i<07 ; i++){
+			TabDisplay tab = new TabDisplay(i);
+			JScrollPane pane = new JScrollPane(tab);
+			add(pane, tab_names[i-1]);
+		}
+	}
+
 	//Set functions
 	public void setMonday(LinkedList<EmployeeTimeSlot> monday) {
 		this.monday = monday;
@@ -197,6 +236,84 @@ public class RawSchedule {
 		if(day == "saturday") return 10;
 		if(day == "sunday") return 12;
 		return -1;
+	}
+	
+	private class TabDisplay extends JPanel{
+	
+		private static final int TABLE_WIDTH = 70;
+		private static final int TABLE_HEIGHT = 30;
+		private static final int COLLOUMN_ONE_WIDTH = 100;
+		private final String[] TABLE_HEADERS = {"12:00 am","1:00 am","2:00 am","3:00 am","4:00 am","5:00 am","6:00 am","7:00 am","8:00 am","9:00 am","10:00 am", "11:00 am","12:00 pm","1:00 pm","2:00 pm","3:00 pm","4:00 pm","5:00 pm","6:00 pm","7:00 pm","8:00 pm","9:00 pm","10:00 pm","11:00 pm"};
+		private final int day;
+		
+		public TabDisplay(int day){
+			this.day = day;
+			
+			LinkedList<EmployeeTimeSlot> slots = getDaysTimeSlots();
+			setMinimumSize(new Dimension(COLLOUMN_ONE_WIDTH+TABLE_HEADERS.length*TABLE_WIDTH, TABLE_HEIGHT*slots.size()));
+			setPreferredSize(new Dimension(COLLOUMN_ONE_WIDTH+TABLE_HEADERS.length*TABLE_WIDTH, TABLE_HEIGHT*slots.size()));
+		}
+		
+		@Override
+		public void paint(Graphics g){
+			drawTimeSlots(g);
+		}
+		
+		private void drawTimeSlots(Graphics g){
+			g.setColor(Color.black);
+			g.setFont(new Font("Lucida Sans Unicode", Font.BOLD, 12));
+			
+			FontMetrics fm = g.getFontMetrics();
+			
+			for(int i=0 ; i<TABLE_HEADERS.length ; i++){
+				g.drawRect(TABLE_WIDTH*i, 0, TABLE_WIDTH, TABLE_HEIGHT);
+				int string_width = fm.stringWidth(TABLE_HEADERS[i]);
+				g.drawString(TABLE_HEADERS[i], TABLE_WIDTH*i+(TABLE_WIDTH-string_width)/2, TABLE_HEIGHT-7);
+			}
+			
+			LinkedList<EmployeeTimeSlot> slots = getDaysTimeSlots();
+			int row = 1;
+			
+			for(EmployeeTimeSlot slot : slots){
+				for(int i=0 ; i<TABLE_HEADERS.length ; i++){
+					g.drawRect(TABLE_WIDTH*i, 0, TABLE_WIDTH, TABLE_HEIGHT);
+				}
+
+				String text = slot.getName()+" ("+slot.getPosition()+")";
+				int string_width = fm.stringWidth(text);
+				double total_time = slot.getEnd()-slot.getBegin();
+				int graphic_width = (int) (TABLE_WIDTH * total_time);
+				int left_x = (int) (TABLE_WIDTH * slot.getBegin());
+				
+				g.setColor(Color.blue);
+				g.fillRect(left_x, row*TABLE_HEIGHT, graphic_width, TABLE_HEIGHT);
+				
+				g.setColor(Color.black);
+				g.drawString(text, left_x+(graphic_width-string_width)/2, (row+1)*TABLE_HEIGHT-9);
+			
+				row++;
+			}
+		}
+		
+		private LinkedList<EmployeeTimeSlot> getDaysTimeSlots(){
+			switch(day){
+			case(1):
+				return sunday;
+			case(2):
+				return monday;
+			case(3):
+				return tuesday;
+			case(4):
+				return wednesday;
+			case(5):
+				return thursday;
+			case(6):
+				return friday;
+			default:
+				return saturday;
+			}
+		}
+	
 	}
 
 }
