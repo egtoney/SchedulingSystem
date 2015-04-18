@@ -1,0 +1,103 @@
+*{
+	font-family:"Lucida Sans Unicode";
+}
+body{
+	width: 100%;
+	padding: 0px 0px;
+	margin: 0px 0px;
+	position: absolute;
+	text-align: center;
+}
+.left{
+	padding-top: 3px;
+  	vertical-align: middle;
+	display: inline-block;
+	float: left;
+}
+.right{
+	display: inline-block;
+	float: right;
+}
+.own_line{
+	display: left;
+	display: inline-block;
+	width: 95%;
+}
+
+table{
+	font-size: 14px;
+}
+th.rotate {
+	height: 85px;
+	white-space: nowrap;
+	transform:
+		translate(5px, 19px)
+		rotate(295deg);
+	max-width: 2em;
+}
+#login_box{
+	width: 350px;
+	max-width: 350px;
+	text-align: center;
+	padding: 20px 20px;
+	background-color: #C800C8;
+	border-radius: 20px;
+	border: 2px solid #640064;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+#container{
+	width: 1000px;
+	max-width: 1000px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+ul
+{
+	background-color: #DDDDDD;
+	padding: 5px;
+	font-size: 14px;
+	text-align: left;
+    list-style-type: none;
+}
+#calendar_container{
+	float: left;
+	width: 90%;
+	margin: 20px 5%;
+	margin-bottom: 0px;
+	display: block;
+	border: 2px solid #640064;
+	border-bottom: 0px solid black;
+}
+#user_controll_container{
+	float: left;
+	width: 90%;
+	display: block;
+	margin: 20px 5%;
+	margin-top: 0px;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	border: 2px solid #640064;
+	overflow: hidden;
+	background-color: #BBBBBB;
+}
+.button{
+	color: #111111;
+	margin-bottom: 2px;
+}
+#user_interface{
+	float: left;
+	display: inline-block;
+	background-color: #BBBBBB;
+	border-right: 2px solid #640064;
+	padding: 0px 15px;
+	text-align: center;
+}
+#user_interface_display{
+	float: right;
+	display: inline-block;
+	padding: 0px 20px;
+}
