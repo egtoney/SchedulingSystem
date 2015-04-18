@@ -35,7 +35,7 @@ public class Main {
 			@Override
 			public void run() {
 				//init stuff
-				Display content = new Display(Main.this);
+				Display content = new Display(Main.this, frame);
 				frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				frame.setContentPane(content);
 				frame.pack();

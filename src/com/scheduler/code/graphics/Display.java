@@ -2,11 +2,17 @@ package com.scheduler.code.graphics;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import com.scheduler.code.Main;
@@ -22,6 +28,7 @@ public class Display extends JPanel{
 
 	//parent class
 	Main main;
+	JFrame parent;
 	
 	//init window stuff
 	private static int DEFAULT_SCREEN_WIDTH = 800;
@@ -36,9 +43,13 @@ public class Display extends JPanel{
 	//room content
 	private LinkedList<JPanel> room_contense = new LinkedList<>();
 	
-	public Display(Main m){
+	//user data
+	private DataPackage data = null;
+	
+	public Display(Main m, JFrame p){
 		super(new BorderLayout());
 		main = m;
+		parent = p;
 		
 		setMinimumSize(new Dimension(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT));
 		setPreferredSize(new Dimension(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT));
@@ -48,7 +59,7 @@ public class Display extends JPanel{
 
 	public void onLogin(Networking connection) {
 		//load data
-		DataPackage data = connection.pullData();
+		data = connection.pullData();
 		
 		//TODO pass to classes that care
 		
@@ -82,8 +93,54 @@ public class Display extends JPanel{
 				room_contense.push(l_screen);
 				add(l_screen, BorderLayout.CENTER);
 				break;
+			case(MAIN_DISPLAY):
+				createMainDisplay();
+				break;
 			}
 		}
+	}
+	
+	/**
+	 * Is used to initialize the main display since this is a large amount
+	 * of code it was separated from the switch statement in setRoom()
+	 */
+	void createMainDisplay(){
+		//First make the menu bar
+		JMenuBar menu = new JMenuBar();
+		
+		JMenu schedule = new JMenu("Schedule");
+		
+			JMenuItem auto_gen_schedule = new JMenuItem("Generate Schedule");
+			auto_gen_schedule.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+				}
+				
+			});
+			schedule.add(auto_gen_schedule);
+		
+			JMenuItem submit_schedule = new JMenuItem("Submit Schedule");
+			submit_schedule.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+				}
+				
+			});
+			schedule.add(submit_schedule);
+		
+		menu.add(schedule);
+		
+		parent.setJMenuBar(menu);
+		
+		// put all of the graphical interfaces on the pane
+		ScheduleScreen scrn = new ScheduleScreen(data);
+		
+		room_contense.push(scrn);
+		add(scrn, BorderLayout.CENTER);
 	}
 	
 }
