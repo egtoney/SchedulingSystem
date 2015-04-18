@@ -21,6 +21,13 @@ public class Networking {
 		username = name;
 		password = new String(cs);
 	}
+
+	public DataPackage pullData() {
+		String result = httpRequest("http://glasswatergames.com/schedule/retrieveData.php?u="+username+"&p="+password);
+
+		DataPackage data = new DataPackage(result);
+		return data;
+	}
 	
 	public static boolean attemptLogin(String username, char[] cs){
 		String pass = new String(cs);
@@ -52,14 +59,6 @@ public class Networking {
 			e.printStackTrace();
 		}
 		return result;
-	}
-
-	public DataPackage pullData() {
-		DataPackage data = new DataPackage();
-		
-		
-		
-		return data;
 	}
 	
 }

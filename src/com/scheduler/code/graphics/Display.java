@@ -50,6 +50,9 @@ public class Display extends JPanel{
 		//load data
 		DataPackage data = connection.pullData();
 		
+		//TODO pass to classes that care
+		
+		
 		//set display
 		setRoom(MAIN_DISPLAY);
 	}
