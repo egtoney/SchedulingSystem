@@ -10,6 +10,8 @@ public class Employee {
 	private String SSN;
 	private String address;
 	private String phone_number;
+	private String password;
+	private String username;
 	private double pay_rate;
 	private double scheduled_hours;
 	private double preferred_hours;
@@ -17,7 +19,7 @@ public class Employee {
 	private LinkedList<String> positions = new LinkedList<>();
 	
 	//Constructor
-	public Employee(String name, String DOB, String SSN, String address, double pay_rate, LinkedList<Double> availability, LinkedList<String> positions, double preferred_hours, String phone_number) {
+	public Employee(String name, String DOB, String SSN, String address, double pay_rate, LinkedList<Double> availability, LinkedList<String> positions, double preferred_hours, String phone_number, String password, String username) {
 		this.name = name;
 		this.DOB = DOB;
 		this.SSN = SSN;
@@ -27,6 +29,8 @@ public class Employee {
 		this.positions = positions;
 		this.preferred_hours = preferred_hours;
 		this.phone_number = phone_number;
+		this.password = password;
+		this.username = username;
 		scheduled_hours = 0;
 	}
 	
@@ -71,6 +75,14 @@ public class Employee {
 		this.phone_number = phone_number;
 	}
 	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
 	//Get functions
 	public String getName() {
 		return name;
@@ -110,5 +122,13 @@ public class Employee {
 	
 	public String getPhoneNumber() {
 		return phone_number;
+	}
+	
+	public String getPassword(String password) {
+		return password;
+	}
+	
+	public String getUsername(String username) {
+		return username;
 	}
 }

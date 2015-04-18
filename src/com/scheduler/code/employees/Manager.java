@@ -8,8 +8,8 @@ public class Manager extends Employee {
 	private String manager_type;
 	
 	//Constructor
-	public Manager(String name, String DOB, String SSN, String address, double pay_rate, LinkedList<Double> availability, LinkedList<String> positions, String manager_type, double preferred_hours, String phone_number) {
-		super(name, DOB, SSN, address, pay_rate, availability, positions, preferred_hours, phone_number);
+	public Manager(String name, String DOB, String SSN, String address, double pay_rate, LinkedList<Double> availability, LinkedList<String> positions, String manager_type, double preferred_hours, String phone_number, String password, String username) {
+		super(name, DOB, SSN, address, pay_rate, availability, positions, preferred_hours, phone_number, password, username);
 			this.manager_type = manager_type;
 	}
 	
