@@ -9,6 +9,7 @@ public class Employee {
 	private String DOB;
 	private String SSN;
 	private String address;
+	private String phone_number;
 	private double pay_rate;
 	private double scheduled_hours;
 	private double preferred_hours;
@@ -16,7 +17,7 @@ public class Employee {
 	private LinkedList<String> positions = new LinkedList<>();
 	
 	//Constructor
-	public Employee(String name, String DOB, String SSN, String address, double pay_rate, LinkedList<Double> availability, LinkedList<String> positions, double preferred_hours) {
+	public Employee(String name, String DOB, String SSN, String address, double pay_rate, LinkedList<Double> availability, LinkedList<String> positions, double preferred_hours, String phone_number) {
 		this.name = name;
 		this.DOB = DOB;
 		this.SSN = SSN;
@@ -25,6 +26,7 @@ public class Employee {
 		this.availability = availability;
 		this.positions = positions;
 		this.preferred_hours = preferred_hours;
+		this.phone_number = phone_number;
 		scheduled_hours = 0;
 	}
 	
@@ -65,6 +67,10 @@ public class Employee {
 		this.preferred_hours = preferred_hours;
 	}
 	
+	public void setPhoneNumber(String phone_number) {
+		this.phone_number = phone_number;
+	}
+	
 	//Get functions
 	public String getName() {
 		return name;
@@ -100,5 +106,9 @@ public class Employee {
 	
 	public double getPreferredHours() {
 		return preferred_hours;
+	}
+	
+	public String getPhoneNumber() {
+		return phone_number;
 	}
 }

@@ -64,7 +64,9 @@ public class DataPackage {
 				}
 			}
 			
-			Employee new_employee = new Employee(name, DOB, SSN, address, pay_rate, availability, positions, preferred_hours);
+			String phone_number = field_array[12];
+			
+			Employee new_employee = new Employee(name, DOB, SSN, address, pay_rate, availability, positions, preferred_hours, phone_number);
 			employee_list.add(new_employee);
 		}
 		this.employee_list = employee_list;

@@ -63,15 +63,15 @@ public class RawSchedule {
 	}
 	*/
 	
-	private LinkedList<TimeSlot> monday = new LinkedList<>();
-	private LinkedList<TimeSlot> tuesday = new LinkedList<>();
-	private LinkedList<TimeSlot> wednesday = new LinkedList<>();
-	private LinkedList<TimeSlot> thursday = new LinkedList<>();
-	private LinkedList<TimeSlot> friday = new LinkedList<>();
-	private LinkedList<TimeSlot> saturday = new LinkedList<>();
-	private LinkedList<TimeSlot> sunday = new LinkedList<>();
+	private LinkedList<EmployeeTimeSlot> monday = new LinkedList<>();
+	private LinkedList<EmployeeTimeSlot> tuesday = new LinkedList<>();
+	private LinkedList<EmployeeTimeSlot> wednesday = new LinkedList<>();
+	private LinkedList<EmployeeTimeSlot> thursday = new LinkedList<>();
+	private LinkedList<EmployeeTimeSlot> friday = new LinkedList<>();
+	private LinkedList<EmployeeTimeSlot> saturday = new LinkedList<>();
+	private LinkedList<EmployeeTimeSlot> sunday = new LinkedList<>();
 	
-	public RawSchedule(LinkedList<TimeSlot> monday, LinkedList<TimeSlot> tuesday, LinkedList<TimeSlot> wednesday, LinkedList<TimeSlot> thursday, LinkedList<TimeSlot> friday, LinkedList<TimeSlot> saturday, LinkedList<TimeSlot> sunday) {
+	public RawSchedule(LinkedList<EmployeeTimeSlot> monday, LinkedList<EmployeeTimeSlot> tuesday, LinkedList<EmployeeTimeSlot> wednesday, LinkedList<EmployeeTimeSlot> thursday, LinkedList<EmployeeTimeSlot> friday, LinkedList<EmployeeTimeSlot> saturday, LinkedList<EmployeeTimeSlot> sunday) {
 		this.monday = monday;
 		this.tuesday = tuesday;
 		this.wednesday = wednesday;
@@ -82,65 +82,65 @@ public class RawSchedule {
 	}
 	
 	//Set functions
-	public void setMonday(LinkedList<TimeSlot> monday) {
+	public void setMonday(LinkedList<EmployeeTimeSlot> monday) {
 		this.monday = monday;
 	}
 	
-	public void setTuesday(LinkedList<TimeSlot> tuesday) {
+	public void setTuesday(LinkedList<EmployeeTimeSlot> tuesday) {
 		this.tuesday = tuesday;
 	}
 	
-	public void setWednesday(LinkedList<TimeSlot> wednesday) {
+	public void setWednesday(LinkedList<EmployeeTimeSlot> wednesday) {
 		this.wednesday = wednesday;
 	}
 	
-	public void setThursday(LinkedList<TimeSlot> thursday) {
+	public void setThursday(LinkedList<EmployeeTimeSlot> thursday) {
 		this.thursday = thursday;
 	}
 	
-	public void setFriday(LinkedList<TimeSlot> friday) {
+	public void setFriday(LinkedList<EmployeeTimeSlot> friday) {
 		this.friday = friday;
 	}
 	
-	public void setSaturday(LinkedList<TimeSlot> saturday) {
+	public void setSaturday(LinkedList<EmployeeTimeSlot> saturday) {
 		this.saturday = saturday;
 	}
 	
-	public void setSunday(LinkedList<TimeSlot> sunday) {
+	public void setSunday(LinkedList<EmployeeTimeSlot> sunday) {
 		this.sunday = sunday;
 	}
 	
 	//Get functions
-	public LinkedList<TimeSlot> getMonday() {
+	public LinkedList<EmployeeTimeSlot> getMonday() {
 		return monday;
 	}
 	
-	public LinkedList<TimeSlot> getTuesday() {
+	public LinkedList<EmployeeTimeSlot> getTuesday() {
 		return tuesday;
 	}
 	
-	public LinkedList<TimeSlot> getWednesday() {
+	public LinkedList<EmployeeTimeSlot> getWednesday() {
 		return wednesday;
 	}
 	
-	public LinkedList<TimeSlot> getThursday() {
+	public LinkedList<EmployeeTimeSlot> getThursday() {
 		return thursday;
 	}
 	
-	public LinkedList<TimeSlot> getFriday() {
+	public LinkedList<EmployeeTimeSlot> getFriday() {
 		return friday;
 	}
 	
-	public LinkedList<TimeSlot> getSaturday() {
+	public LinkedList<EmployeeTimeSlot> getSaturday() {
 		return saturday;
 	}
 	
-	public LinkedList<TimeSlot> getSunday() {
+	public LinkedList<EmployeeTimeSlot> getSunday() {
 		return sunday;
 	}
 	
 	//********Random Schedule Generator********\\
-	public static LinkedList<EmployeeTimeSlot> generateSchedule(String s_day, LinkedList<String> positions, LinkedList<TimeSlot> day, LinkedList<Employee> employee_list) {
+	public static LinkedList<EmployeeTimeSlot> generateSchedule(String s_day, LinkedList<String> positions, LinkedList<EmployeeTimeSlot> day, LinkedList<Employee> employee_list) {
 		LinkedList<EmployeeTimeSlot> generated_schedule = new LinkedList<>();
 		Hashtable< String, LinkedList<Employee> > position_list = new Hashtable<>();
 		int i_day = dayToInt(s_day);
@@ -159,7 +159,7 @@ public class RawSchedule {
 			}
 		}
 		
-		for(TimeSlot t : day) { 
+		for(EmployeeTimeSlot t : day) { 
 			double begin = t.getBegin();
 			double end = t.getEnd();
 			String pos = t.getPosition();
