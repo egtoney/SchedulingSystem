@@ -7,6 +7,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import com.scheduler.code.employees.Employee;
+
 public class Networking {
 	
 	private boolean logged_in = false;
@@ -27,6 +29,44 @@ public class Networking {
 
 		DataPackage data = new DataPackage(result);
 		return data;
+	}
+	
+	public boolean createNewEmployee(Employee e){
+		String[] add = e.getAddress().split("_");
+		
+		String positions = "";
+		boolean first = true;
+		for(String str : e.getPositions()){
+			if(!first){
+				positions += ", ";
+			}
+			first = false;
+			positions += str;
+		}
+		
+		String avaiability = "";
+		boolean toggle = true;
+		boolean first = true;
+		for(double s : e.getAvailability()){
+			if(!first){
+				if(toggle){
+					avaiability += "-";
+				}else{
+					avaiability += ",";
+				}
+				toggle = (toggle) ? false : true ;
+			}
+			first = false;
+			int hour = (int) (s/1);
+			int minutes = (s%1.0 != 0) ? 30 : 0 ;
+			avaiability = hour + "_" + minutes;
+		}
+		
+		String request = "http://glasswatergames.com/schedule/createEmloyee.php?u="+username+"&"
+				+ "p="+password+"&n_u="+e.getUsername()+"&n_n="+e.getName()+"&"
+				+ "n_ph="+e.getPreferredHours()+"&n_pr="+e.getPayRate()+"&n_dob="+e.getDOB()+"&n_ssn="+e.getSSN()+"&"
+				+ "n_a="+add[0]+"&n_c="+add[1]+"&n_s="+add[2]+"&n_z="+add[3]+"&n_pn="+e.getPhoneNumber()+"&n_pos="+positions+"&"
+				+ "n_ava="+avaiability+"&n_aod=none";
 	}
 	
 	public static boolean attemptLogin(String username, char[] cs){

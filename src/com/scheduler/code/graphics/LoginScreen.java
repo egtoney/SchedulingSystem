@@ -1,6 +1,7 @@
 package com.scheduler.code.graphics;
 
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,9 +31,11 @@ public class LoginScreen extends JPanel{
 	private final Display parent;
 	
 	public LoginScreen(final Display parent){
+		this.setLayout(new GridBagLayout());
+		
 		this.parent = parent;
 		
-		JPanel content = new JPanel(new GridLayout(3,2));
+		JPanel content = new JPanel(new GridLayout(0,2));
 		content.add(new JLabel("Username"));
 		content.add(username);
 		content.add(new JLabel("Password"));

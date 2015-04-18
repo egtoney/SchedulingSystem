@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -64,6 +65,10 @@ public class ScheduleScreen extends JPanel implements MouseListener, MouseMotion
 					mouse_pressed = true;
 					Point mouse_loc = arg0.getPoint();
 					employee_focus = mouse_loc.y/EmployeeNameplate.HEIGHT;
+					if(employee_focus == dp.getEmployeeList().size()){
+						addEmployee();
+						employee_focus = -1;
+					}
 				}
 			}
 
@@ -75,7 +80,6 @@ public class ScheduleScreen extends JPanel implements MouseListener, MouseMotion
 					Rectangle rect = elPane.getBounds();
 					mouse_loc.x += rect.x;
 					if(!rect.contains(mouse_loc)){
-						//TODO 
 						running_schedule.mouseDrop(mouse_loc, dp.getEmployeeList().get(employee_focus));
 					}
 				}
@@ -107,6 +111,11 @@ public class ScheduleScreen extends JPanel implements MouseListener, MouseMotion
 		addMouseMotionListener(this);
 	}
 	
+	protected void addEmployee() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	@Override
 	public void paint(Graphics g){
 		super.paint(g);
@@ -135,8 +144,7 @@ public class ScheduleScreen extends JPanel implements MouseListener, MouseMotion
 		//drop the employee into the schedule
 		if(mouse_pressed && employee_focus != -1){
 			Point mouse_loc = arg0.getPoint();
-			//TODO
-			System.out.println("Dropped "+dp.getEmployeeList().get(employee_focus).getName()+" on the schedule at "+mouse_loc);
+			running_schedule.mouseDrop(mouse_loc, dp.getEmployeeList().get(employee_focus));
 		}
 		employee_focus = -1;
 		mouse_pressed = false;
@@ -183,6 +191,8 @@ public class ScheduleScreen extends JPanel implements MouseListener, MouseMotion
 				Graphics sub = g.create(0, i*EmployeeNameplate.HEIGHT, EmployeeNameplate.WIDTH, EmployeeNameplate.HEIGHT);
 				fields.get(i).paint(sub);
 			}
+			Graphics sub = g.create(0, fields.size()*EmployeeNameplate.HEIGHT, EmployeeNameplate.WIDTH, EmployeeNameplate.HEIGHT);
+			EmployeeNameplate.paintAdditionNameplate(sub);
 		}
 		
 	}
@@ -206,6 +216,21 @@ public class ScheduleScreen extends JPanel implements MouseListener, MouseMotion
 			setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		}
 		
+		public static void paintAdditionNameplate(Graphics g) {
+			g.setColor(Color.gray);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			
+			g.setColor(Color.LIGHT_GRAY);
+			g.drawRect(0, 0, WIDTH-1, HEIGHT-1);
+			
+			g.setColor(Color.black);
+			g.setFont(new Font("Lucida Sans Unicode", Font.PLAIN, 25));
+			
+			FontMetrics fm = g.getFontMetrics();
+			
+			g.drawString("Add Employee", (WIDTH-fm.stringWidth("Add Employee"))/2, HEIGHT-15);
+		}
+
 		@Override
 		public void paint(Graphics g){
 			g.setColor(Color.gray);
