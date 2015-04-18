@@ -109,7 +109,7 @@ public class RawSchedule {
 			String pos = t.getPosition();
 			boolean found = false;
 			for(Employee e : position_list.get(pos)) {
-				LinkedList<Integer> availability = e.getAvailability();
+				LinkedList<Double> availability = e.getAvailability();
 				if(((availability.get(i_day+1) - availability.get(i_day)) != 0) && ((end - begin + e.getScheduledHours()) <= e.getPreferredHours())) {
 					if(availability.get(i_day) >= begin && availability.get(i_day+1) <= end) {
 						EmployeeTimeSlot ets = new EmployeeTimeSlot(e.getName(), begin, end, pos);

@@ -12,12 +12,11 @@ public class Employee {
 	private double pay_rate;
 	private double scheduled_hours;
 	private double preferred_hours;
-	private LinkedList<String> ask_off_days = new LinkedList<>();
-	private LinkedList<Integer> availability = new LinkedList<>();
+	private LinkedList<Double> availability = new LinkedList<>();
 	private LinkedList<String> positions = new LinkedList<>();
 	
 	//Constructor
-	public Employee(String name, String DOB, String SSN, String address, double pay_rate, LinkedList<Integer> availability, LinkedList<String> positions, LinkedList<String> ask_off_days, double preferred_hours) {
+	public Employee(String name, String DOB, String SSN, String address, double pay_rate, LinkedList<Double> availability, LinkedList<String> positions, double preferred_hours) {
 		this.name = name;
 		this.DOB = DOB;
 		this.SSN = SSN;
@@ -25,7 +24,6 @@ public class Employee {
 		this.pay_rate = pay_rate;
 		this.availability = availability;
 		this.positions = positions;
-		this.ask_off_days = ask_off_days;
 		this.preferred_hours = preferred_hours;
 		scheduled_hours = 0;
 	}
@@ -51,16 +49,12 @@ public class Employee {
 		this.pay_rate = pay_rate;
 	}
 	
-	public void setAvailability(LinkedList<Integer> availability) {
+	public void setAvailability(LinkedList<Double> availability) {
 		this.availability = availability;
 	}
 	
 	public void setPositions(LinkedList<String> positions) {
 		this.positions = positions;
-	}
-	
-	public void setAskOffDays(LinkedList<String> ask_off_days) {
-		this.ask_off_days = ask_off_days;
 	}
 	
 	public void setScheduledHours(double scheduled_hours) {
@@ -92,16 +86,12 @@ public class Employee {
 		return pay_rate;
 	}
 	
-	public LinkedList<Integer> getAvailability() {
+	public LinkedList<Double> getAvailability() {
 		return availability;
 	}
 	
 	public LinkedList<String> getPositions() {
 		return positions;
-	}
-	
-	public LinkedList<String> getAskOffDays() {
-		return ask_off_days;
 	}
 	
 	public double getScheduledHours() {
