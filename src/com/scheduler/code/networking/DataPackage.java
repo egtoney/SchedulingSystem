@@ -1,8 +1,5 @@
 package com.scheduler.code.networking;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
