@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.SpringLayout;
@@ -29,7 +30,7 @@ public class EmployeeWindow extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = -8525299699136290656L;
-	JFrame parent;
+	private JFrame parent;
 	
 	public static void main(String[] args) {
 		JFrame derp = new JFrame();
@@ -50,50 +51,65 @@ public class EmployeeWindow extends JFrame{
 		
 		String[] labels = {"First: ", "Last: ", "Middle: ", "DOB (mm/dd/yyyy): ", "/", "/", "SSN: ", "-", "-", "Phone Number: ", "-", "-", "Address: ", "City: ", "State: ", "Zip: ", "Pay Rate: "};
 		int label_length = labels.length;
-		Font font = new Font("Courier", Font.BOLD,20);
+		Font font = new Font("Lucida Sans Unicode", Font.PLAIN, 15);
 		
 		JPanel content = new JPanel(new BorderLayout());
 		
-		JPanel right_col = new JPanel(new BorderLayout());
-		JPanel g1 = new JPanel(new GridLayout(1,6));
-		JPanel g2 = new JPanel(new GridLayout(1,6));
-		ListModel model = new DefaultListModel();
-		JScrollPane pane = new JScrollPane(new JList(model));
-		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		content.add(pane, BorderLayout.LINE_START);
+		// Left Column
+		JPanel left_col = new JPanel();
 		
-		for(int i = 0; i < 3; i++) {
-			 JLabel l = new JLabel(labels[i], JLabel.TRAILING); 
-			 l.setFont(font); 
-			 g1.add(l); 
-			 JTextField textField = new JTextField(7); 
-			 textField.setFont(font);
-			 l.setLabelFor(textField); 
-			 g1.add(textField);
-		}
-		for(int i = 3; i < 6; i++) {
-			 JLabel l = new JLabel(labels[i], JLabel.TRAILING); 
-			 l.setFont(font); 
-			 g2.add(l); 
-			 JTextField textField = new JTextField(7); 
-			 textField.setFont(font);
-			 l.setLabelFor(textField); 
-			 g2.add(textField);
-		}
+		content.add(left_col, BorderLayout.LINE_START);
 		
-		//right_col.add(new JLabel("", JLabel.TRAILING)); right_col.add(new JLabel("", JLabel.TRAILING));
-	   
-		right_col.add(g1);
-		right_col.add(g2);
-	    content.add(right_col, BorderLayout.LINE_END);
-	 
-	        //Lay out the panel.
-	    /*SpringUtilities.makeCompactGrid(right_col,
-	    		 							6, 6, //rows, cols
-	                                        6, 6,        //initX, initY
-	                                        6, 6);       //xPad, yPad
-		*/
+		// RIght Column
+		JPanel right_col = new JPanel(new GridLayout(0,1));
+		
+			JPanel row1 = new JPanel(new FlowLayout());
+
+				JLabel l1 = new JLabel(labels[0]);
+				JTextField first_name = new JTextField();
+				first_name.setPreferredSize(new Dimension(100,25));
+				row1.add(l1);
+				row1.add(first_name);
+				
+				JLabel l2 = new JLabel(labels[1]);
+				JTextField last_name = new JTextField();
+				last_name.setPreferredSize(new Dimension(100,25));
+				row1.add(l2);
+				row1.add(last_name);
+				
+				JLabel l3 = new JLabel(labels[2]);
+				JTextField middle_name = new JTextField();
+				middle_name.setPreferredSize(new Dimension(100,25));
+				row1.add(l3);
+				row1.add(middle_name);
+			
+			right_col.add(row1);
+			
+			JPanel row2 = new JPanel(new FlowLayout());
+
+				JLabel l4 = new JLabel(labels[3]);
+				JTextField birth_month = new JTextField();
+				birth_month.setPreferredSize(new Dimension(100,25));
+				row2.add(l4);
+				row2.add(birth_month);
+				
+				JLabel l5 = new JLabel(labels[4]);
+				JTextField birth_day = new JTextField();
+				birth_day.setPreferredSize(new Dimension(100,25));
+				row2.add(l5);
+				row2.add(birth_day);
+				
+				JLabel l6 = new JLabel(labels[5]);
+				JTextField birth_year = new JTextField();
+				birth_year.setPreferredSize(new Dimension(100,25));
+				row2.add(l6);
+				row2.add(birth_year);
+		
+			right_col.add(row2);
+			
+		content.add(right_col, BorderLayout.LINE_END);
+		
+		
 	    JPanel buttons = new JPanel(new FlowLayout());
 	    JPanel under = new JPanel(new BorderLayout());
 	    JButton delete_selected = new JButton("Delete Selected"); delete_selected.setPreferredSize(new Dimension(200,40));
