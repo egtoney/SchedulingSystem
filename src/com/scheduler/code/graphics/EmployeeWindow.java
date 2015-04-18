@@ -37,6 +37,7 @@ public class EmployeeWindow extends JFrame{
 	private static final long serialVersionUID = -8525299699136290656L;
 	private JFrame parent;
 	private LinkedList<Employee> employee_list = new LinkedList<>();
+	private LinkedList<String> position_list = new LinkedList<>();
 	
 	public static void main(String[] args) {
 		JFrame derp = new JFrame();
@@ -45,31 +46,33 @@ public class EmployeeWindow extends JFrame{
 		LinkedList<String> positions = new LinkedList<>();
 		e_list.add(new Employee("A", "blank", "blank", "blank", 99.99, availability, positions, 40, "606-879-6300", "", ""));
 		derp.setVisible(true);
-		new EmployeeWindow(derp, e_list);
+		new EmployeeWindow(derp, e_list, positions);
 	}
-	public EmployeeWindow(JFrame frame, LinkedList<Employee> employee_list, Employee e) {
-		this(frame, employee_list);
+	public EmployeeWindow(JFrame frame, LinkedList<Employee> employee_list, LinkedList<String> position_list, Employee e) {
+		this(frame, employee_list, position_list);
 	}
 	
-	public EmployeeWindow(JFrame frame, final LinkedList<Employee> e_l) {
+	public EmployeeWindow(JFrame frame, final LinkedList<Employee> e_l, LinkedList<String> pos_list) {
 		super("Employee Edit Manager");
 		
 		parent = frame;
 		employee_list = e_l;
+		position_list = pos_list;
+		
 		frame.setEnabled(false);
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
-		String[] labels = {"First: ", "Last: ", "Middle: ", "DOB (mm/dd/yyyy): ", "/", "/", "SSN: ", "-", "-", "Phone Number: ", "-", "-", "Address: ", "City: ", "State: ", "Zip: ", "Pay Rate (99.99): ", "Preferred Hours (99);"};
+		String[] labels = {"First: ", "Last: ", "Middle: ", "DOB (mm/dd/yyyy): ", "/", "/", "SSN: ", "-", "-", "Phone Number: ", "-", "-", "Address: ", "City: ", "State: ", "Zip: ", "Pay Rate (99.99): ", "Preferred Hours (99):", "Username: ", "Password: "};
 		String[] available_hours = new String[48];
-		Double[] available_hours_mirror = new Double[48];
+		final Double[] available_hours_mirror = new Double[48];
 		for(int i = 0; i < 24; i++) {
 			available_hours[i*2] = Integer.toString(i)+":00";
 			available_hours[i*2+1] = Integer.toString(i)+":30";
 			available_hours_mirror[i*2+1] = (double) i;
 			available_hours_mirror[i*2+1] = (double) i + 0.5;
 		}
-		int label_length = labels.length;
+	
 		Font font = new Font("Lucida Sans Unicode", Font.PLAIN, 15);
 		
 		JPanel content = new JPanel(new BorderLayout());
@@ -220,22 +223,49 @@ public class EmployeeWindow extends JFrame{
 				row6.add(l17);
 				row6.add(pay_rate);
 				
+			right_col.add(row6);
+			
+			JPanel row15 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+				
 				JLabel l18 = new JLabel(labels[17]);
 				final JTextField preferred_hours = new JTextField();
-				preferred_hours.setPreferredSize(new Dimension(100,25));
-				row6.add(l18);
-				row6.add(preferred_hours);
+				preferred_hours.setPreferredSize(new Dimension(50,25));
+				row15.add(l18);
+				row15.add(preferred_hours);
+				
+				JLabel m = new JLabel("Positions: ");
+				final DefaultListModel<String> p_model = new DefaultListModel<>();
+				final JList<String> p_l = new JList<>(model);
+				for(String p : position_list) {
+					 p_model.addElement(p);
+				}
 	
-			right_col.add(row6);
+			right_col.add(row15);
+			
+			JPanel row14 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			
+				JLabel l19 = new JLabel(labels[18]);
+				final JTextField username = new JTextField();
+				username.setPreferredSize(new Dimension(100,25));
+				row14.add(l19);
+				row14.add(username);
+				
+				JLabel l20 = new JLabel(labels[19]);
+				final JTextField password = new JTextField();
+				password.setPreferredSize(new Dimension(100,25));
+				row14.add(l20);
+				row14.add(password);
+	
+			right_col.add(row14);
 			
 			//Combo boxes
 			JPanel row7 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 			
-				JLabel m = new JLabel("Monday: ");
+				JLabel m1 = new JLabel("Monday: ");
 				final JComboBox<String> m_begin = new JComboBox<>(available_hours);
 				JLabel to = new JLabel("to");
 				final JComboBox<String> m_end = new JComboBox<>(available_hours);
-				row7.add(m);
+				row7.add(m1);
 				row7.add(m_begin);
 				row7.add(to);
 				row7.add(m_end);
@@ -405,80 +435,114 @@ public class EmployeeWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				boolean good = true;
+				
+				last_name.setBackground(Color.white);
 				if(last_name.getText().isEmpty()){
 					good = false;
-					last_name.setBackground(Color.red);
+					last_name.setBackground(Color.yellow);
 				}
+				first_name.setBackground(Color.white);
 				if(first_name.getText().isEmpty()){
 					good = false;
-					first_name.setBackground(Color.red);
+					first_name.setBackground(Color.yellow);
 				}
+				middle_name.setBackground(Color.white);
 				if(middle_name.getText().isEmpty()){
 					good = false;
-					middle_name.setBackground(Color.red);
+					middle_name.setBackground(Color.yellow);
 				}
+				birth_month.setBackground(Color.white);
 				if(birth_month.getText().isEmpty()){
 					good = false;
-					birth_month.setBackground(Color.red);
+					birth_month.setBackground(Color.yellow);
 				}
+				birth_day.setBackground(Color.white);
 				if(birth_day.getText().isEmpty()){
 					good = false;
-					birth_day.setBackground(Color.red);
+					birth_day.setBackground(Color.yellow);
 				}
+				birth_year.setBackground(Color.white);
 				if(birth_year.getText().isEmpty()){
 					good = false;
-					birth_year.setBackground(Color.red);
+					birth_year.setBackground(Color.yellow);
 				}
+				SSN1.setBackground(Color.white);
 				if(SSN1.getText().isEmpty()){
 					good = false;
-					SSN1.setBackground(Color.red);
+					SSN1.setBackground(Color.yellow);
 				}
+				SSN2.setBackground(Color.white);
 				if(SSN2.getText().isEmpty()){
 					good = false;
-					SSN2.setBackground(Color.red);
+					SSN2.setBackground(Color.yellow);
 				}
+				SSN3.setBackground(Color.white);
 				if(SSN3.getText().isEmpty()){
 					good = false;
-					SSN3.setBackground(Color.red);
+					SSN3.setBackground(Color.yellow);
 				}
+				address.setBackground(Color.white);
 				if(address.getText().isEmpty()){
 					good = false;
-					address.setBackground(Color.red);
+					address.setBackground(Color.yellow);
 				}
+				city.setBackground(Color.white);
 				if(city.getText().isEmpty()){
 					good = false;
-					city.setBackground(Color.red);
+					city.setBackground(Color.yellow);
 				}
+				state.setBackground(Color.white);
 				if(state.getText().isEmpty()){
 					good = false;
-					state.setBackground(Color.red);
+					state.setBackground(Color.yellow);
 				}
+				zip.setBackground(Color.white);
 				if(zip.getText().isEmpty()){
 					good = false;
-					zip.setBackground(Color.red);
+					zip.setBackground(Color.yellow);
 				}
+				P1.setBackground(Color.white);
 				if(P1.getText().isEmpty()){
 					good = false;
-					P1.setBackground(Color.red);
+					P1.setBackground(Color.yellow);
 				}
+				P2.setBackground(Color.white);
 				if(P2.getText().isEmpty()){
 					good = false;
-					P2.setBackground(Color.red);
+					P2.setBackground(Color.yellow);
 				}
+				P3.setBackground(Color.white);
 				if(P3.getText().isEmpty()){
 					good = false;
-					P3.setBackground(Color.red);
+					P3.setBackground(Color.yellow);
 				}
-				if(city.getText().isEmpty()){
+				pay_rate.setBackground(Color.white);
+				if(pay_rate.getText().isEmpty()){
 					good = false;
-					city.setBackground(Color.red);
+					pay_rate.setBackground(Color.yellow);
 				}
-				if(state.getText().isEmpty()){
+				preferred_hours.setBackground(Color.white);
+				if(preferred_hours.getText().isEmpty()){
 					good = false;
-					state.setBackground(Color.red);
+					preferred_hours.setBackground(Color.yellow);
+				}
+				username.setBackground(Color.white);
+				if(username.getText().isEmpty()){
+					good = false;
+					username.setBackground(Color.yellow);
+				}
+				password.setBackground(Color.white);
+				if(password.getText().isEmpty()){
+					good = false;
+					password.setBackground(Color.yellow);
 				}
 					if(good) { 
-						String name = last_name.getText()+"_"+first_name.getText()+"_"+middle_name.getText();
+						String name = first_name.getText()+" "+last_name.getText()+" "+middle_name.getText();
+						for(Employee em : employee_list) {
+							if(em.getName() == name) {
+								return;
+							}
+						}
 						String DOB = birth_month.getText()+"_"+birth_day.getText()+"_"+birth_year.getText();
 						String SSN = SSN1.getText()+"_"+SSN2.getText()+"_"+SSN3.getText();
 						String s_address = address.getText()+"_"+city.getText()+"_"+state.getText()+"_"+zip.getText();
@@ -486,15 +550,174 @@ public class EmployeeWindow extends JFrame{
 						double d_pay_rate = Double.parseDouble(pay_rate.getText());
 						double d_preferred_hours = Double.parseDouble(preferred_hours.getText());
 						LinkedList<Double> availability = new LinkedList<>();
+						availability.add(available_hours_mirror[m_begin.getSelectedIndex()]); availability.add(available_hours_mirror[m_end.getSelectedIndex()]); availability.add(available_hours_mirror[t_begin.getSelectedIndex()]); availability.add(available_hours_mirror[t_end.getSelectedIndex()]); availability.add(available_hours_mirror[w_begin.getSelectedIndex()]); availability.add(available_hours_mirror[w_end.getSelectedIndex()]); availability.add(available_hours_mirror[r_begin.getSelectedIndex()]); availability.add(available_hours_mirror[r_end.getSelectedIndex()]); availability.add(available_hours_mirror[f_begin.getSelectedIndex()]); availability.add(available_hours_mirror[f_end.getSelectedIndex()]); availability.add(available_hours_mirror[s_begin.getSelectedIndex()]); availability.add(available_hours_mirror[s_end.getSelectedIndex()]); availability.add(available_hours_mirror[su_begin.getSelectedIndex()]); availability.add(available_hours_mirror[su_end.getSelectedIndex()]);
 						LinkedList<String> positions = new LinkedList<>();
-						String username = "";
-						String password = "";
-						Employee new_employee = new Employee(name, DOB, SSN, s_address, d_pay_rate, availability, positions, d_preferred_hours, phone_number, password, username);
+						String s_username = username.getText();
+						String s_password = password.getText();
+						Employee new_employee = new Employee(name, DOB, SSN, s_address, d_pay_rate, availability, positions, d_preferred_hours, phone_number, s_password, s_username);
+						employee_list.add(new_employee);
+						model.addElement(new_employee.getName());
 					}
 			}
 		});
+		
+		submit_changes.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				boolean good = true;
+				
+				last_name.setBackground(Color.white);
+				if(last_name.getText().isEmpty()){
+					good = false;
+					last_name.setBackground(Color.yellow);
+				}
+				first_name.setBackground(Color.white);
+				if(first_name.getText().isEmpty()){
+					good = false;
+					first_name.setBackground(Color.yellow);
+				}
+				middle_name.setBackground(Color.white);
+				if(middle_name.getText().isEmpty()){
+					good = false;
+					middle_name.setBackground(Color.yellow);
+				}
+				birth_month.setBackground(Color.white);
+				if(birth_month.getText().isEmpty()){
+					good = false;
+					birth_month.setBackground(Color.yellow);
+				}
+				birth_day.setBackground(Color.white);
+				if(birth_day.getText().isEmpty()){
+					good = false;
+					birth_day.setBackground(Color.yellow);
+				}
+				birth_year.setBackground(Color.white);
+				if(birth_year.getText().isEmpty()){
+					good = false;
+					birth_year.setBackground(Color.yellow);
+				}
+				SSN1.setBackground(Color.white);
+				if(SSN1.getText().isEmpty()){
+					good = false;
+					SSN1.setBackground(Color.yellow);
+				}
+				SSN2.setBackground(Color.white);
+				if(SSN2.getText().isEmpty()){
+					good = false;
+					SSN2.setBackground(Color.yellow);
+				}
+				SSN3.setBackground(Color.white);
+				if(SSN3.getText().isEmpty()){
+					good = false;
+					SSN3.setBackground(Color.yellow);
+				}
+				address.setBackground(Color.white);
+				if(address.getText().isEmpty()){
+					good = false;
+					address.setBackground(Color.yellow);
+				}
+				city.setBackground(Color.white);
+				if(city.getText().isEmpty()){
+					good = false;
+					city.setBackground(Color.yellow);
+				}
+				state.setBackground(Color.white);
+				if(state.getText().isEmpty()){
+					good = false;
+					state.setBackground(Color.yellow);
+				}
+				zip.setBackground(Color.white);
+				if(zip.getText().isEmpty()){
+					good = false;
+					zip.setBackground(Color.yellow);
+				}
+				P1.setBackground(Color.white);
+				if(P1.getText().isEmpty()){
+					good = false;
+					P1.setBackground(Color.yellow);
+				}
+				P2.setBackground(Color.white);
+				if(P2.getText().isEmpty()){
+					good = false;
+					P2.setBackground(Color.yellow);
+				}
+				P3.setBackground(Color.white);
+				if(P3.getText().isEmpty()){
+					good = false;
+					P3.setBackground(Color.yellow);
+				}
+				pay_rate.setBackground(Color.white);
+				if(pay_rate.getText().isEmpty()){
+					good = false;
+					pay_rate.setBackground(Color.yellow);
+				}
+				preferred_hours.setBackground(Color.white);
+				if(preferred_hours.getText().isEmpty()){
+					good = false;
+					preferred_hours.setBackground(Color.yellow);
+				}
+				username.setBackground(Color.white);
+				if(username.getText().isEmpty()){
+					good = false;
+					username.setBackground(Color.yellow);
+				}
+				password.setBackground(Color.white);
+				if(password.getText().isEmpty()){
+					good = false;
+					password.setBackground(Color.yellow);
+				}
+					if(good) { 
+						String name = first_name.getText()+" "+last_name.getText()+" "+middle_name.getText();
+						String DOB = birth_month.getText()+"_"+birth_day.getText()+"_"+birth_year.getText();
+						String SSN = SSN1.getText()+"_"+SSN2.getText()+"_"+SSN3.getText();
+						String s_address = address.getText()+"_"+city.getText()+"_"+state.getText()+"_"+zip.getText();
+						String phone_number = P1.getText()+P2.getText()+P3.getText();
+						double d_pay_rate = Double.parseDouble(pay_rate.getText());
+						double d_preferred_hours = Double.parseDouble(preferred_hours.getText());
+						LinkedList<Double> availability = new LinkedList<>();
+						availability.add(available_hours_mirror[m_begin.getSelectedIndex()]); availability.add(available_hours_mirror[m_end.getSelectedIndex()]); availability.add(available_hours_mirror[t_begin.getSelectedIndex()]); availability.add(available_hours_mirror[t_end.getSelectedIndex()]); availability.add(available_hours_mirror[w_begin.getSelectedIndex()]); availability.add(available_hours_mirror[w_end.getSelectedIndex()]); availability.add(available_hours_mirror[r_begin.getSelectedIndex()]); availability.add(available_hours_mirror[r_end.getSelectedIndex()]); availability.add(available_hours_mirror[f_begin.getSelectedIndex()]); availability.add(available_hours_mirror[f_end.getSelectedIndex()]); availability.add(available_hours_mirror[s_begin.getSelectedIndex()]); availability.add(available_hours_mirror[s_end.getSelectedIndex()]); availability.add(available_hours_mirror[su_begin.getSelectedIndex()]); availability.add(available_hours_mirror[su_end.getSelectedIndex()]);
+						LinkedList<String> positions = new LinkedList<>();
+						String s_username = username.getText();
+						String s_password = password.getText();
+						for(Employee em : employee_list) {
+							if(em.getName() == name) {
+								em.setName(name);
+								em.setDOB(DOB);
+								em.setSSN(SSN);
+								em.setAddress(s_address);
+								em.setPhoneNumber(phone_number);
+								em.setPayRate(d_pay_rate);
+								em.setPreferredHours(d_preferred_hours);
+								em.setAvailability(availability);
+								em.setPositions(positions);
+								em.setUsername(s_username);
+								em.setPassword(s_password);
+								return;
+							}
+						}
+						Employee new_employee = new Employee(name, DOB, SSN, s_address, d_pay_rate, availability, positions, d_preferred_hours, phone_number, s_password, s_username);
+						employee_list.add(new_employee);
+						model.addElement(new_employee.getName());
+					}
+			}
+		});
+		
+		
+	    cancel.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				close();
+			}
+			
+		});
+
 	}
 	
+
 	void close(){
 		//re enable frame
 		parent.setEnabled(true);

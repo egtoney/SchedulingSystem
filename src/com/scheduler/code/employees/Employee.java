@@ -124,11 +124,11 @@ public class Employee {
 		return phone_number;
 	}
 	
-	public String getPassword(String password) {
+	public String getPassword() {
 		return password;
 	}
 	
-	public String getUsername(String username) {
+	public String getUsername() {
 		return username;
 	}
 }

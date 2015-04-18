@@ -10,31 +10,6 @@ public class DataPackage {
 	
 	private LinkedList<Employee> employee_list = new LinkedList<>();
 	
-	/*-------------DEBUG----------------*\
-	public static void main(String[] arg){
-		String data = "Bob Saggot:40:12.5:1_19_1996:123_45_6789:123_street_dr.:City:State:12345-1234:first:0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00:04_22_2015;Ethan Toney:20:15:1_19_1996:123-45-6789:4_lol_cat:City2:State2:13245-1234:second:0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00,0_00-24_00:04_23_2015;";
-		DataPackage dat = new DataPackage(data);
-		LinkedList<Employee> e_l = dat.getEmployeeList();
-		for(Employee e : e_l) {
-			System.out.println(e.getName());
-			System.out.println(e.getDOB());
-			System.out.println(e.getSSN());
-			System.out.println(e.getAddress());
-			System.out.println(e.getPayRate());
-			System.out.println(e.getScheduledHours());
-			System.out.println(e.getPreferredHours());
-			LinkedList<Double> a = e.getAvailability();
- 			LinkedList<String> p = e.getPositions();
- 			for(Double d : a) {
- 				System.out.println(d);
- 			}
- 			for(String s : p) {
- 				System.out.println(s);
- 			}
-		}
-	}
-	*/
-	
 	public DataPackage(String result) {
 		LinkedList<Employee> employee_list = new LinkedList<>();
 		String[] employees = result.split(";");
