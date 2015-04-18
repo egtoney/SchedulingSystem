@@ -245,7 +245,7 @@ public class RawSchedule extends JTabbedPane{
 		private static final int TABLE_WIDTH = 70;
 		private static final int TABLE_HEIGHT = 30;
 		private static final int COLLOUMN_ONE_WIDTH = 100;
-		private final String[] TABLE_HEADERS = {"12:00 am","1:00 am","2:00 am","3:00 am","4:00 am","5:00 am","6:00 am","7:00 am","8:00 am","9:00 am","10:00 am", "11:00 am","12:00 pm","1:00 pm","2:00 pm","3:00 pm","4:00 pm","5:00 pm","6:00 pm","7:00 pm","8:00 pm","9:00 pm","10:00 pm","11:00 pm"};
+		private final String[] TABLE_HEADERS = {"Name", "12:00 am","1:00 am","2:00 am","3:00 am","4:00 am","5:00 am","6:00 am","7:00 am","8:00 am","9:00 am","10:00 am", "11:00 am","12:00 pm","1:00 pm","2:00 pm","3:00 pm","4:00 pm","5:00 pm","6:00 pm","7:00 pm","8:00 pm","9:00 pm","10:00 pm","11:00 pm"};
 		private final int day;
 		
 		public TabDisplay(int day){
@@ -281,17 +281,19 @@ public class RawSchedule extends JTabbedPane{
 					g.drawRect(TABLE_WIDTH*i, 0, TABLE_WIDTH, TABLE_HEIGHT);
 				}
 
-				String text = slot.getName()+" ("+slot.getPosition()+")";
+				String name = slot.getName();
+				String position = " ("+slot.getPosition()+")";
 				int string_width = fm.stringWidth(text);
 				double total_time = slot.getEnd()-slot.getBegin();
 				int graphic_width = (int) (TABLE_WIDTH * total_time);
-				int left_x = (int) (TABLE_WIDTH * slot.getBegin());
+				int left_x = (int) (TABLE_WIDTH * (slot.getBegin()+1));
 				
 				g.setColor(Color.blue);
 				g.fillRect(left_x, row*TABLE_HEIGHT, graphic_width, TABLE_HEIGHT);
 				
 				g.setColor(Color.black);
-				g.drawString(text, left_x+(graphic_width-string_width)/2, (row+1)*TABLE_HEIGHT-9);
+				g.drawString(name, x, y);
+				g.drawString(position, left_x+(graphic_width-string_width)/2, (row+1)*TABLE_HEIGHT-9);
 			
 				row++;
 			}
