@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import com.scheduler.code.Main;
 import com.scheduler.code.networking.DataPackage;
 import com.scheduler.code.networking.Networking;
+import com.scheduler.code.scheduler.EmployeeTimeSlot;
 import com.scheduler.code.scheduler.RawSchedule;
 
 public class Display extends JPanel{
@@ -107,7 +108,10 @@ public class Display extends JPanel{
 		        
 				LoginScreen l_screen = new LoginScreen(this);
 				
-				room_contense.push(l_screen);
+				JPanel p = new JPanel();
+				p.add(l_screen);
+			
+				room_contense.push(p);
 				add(l_screen, BorderLayout.CENTER);
 				break;
 			case(MAIN_DISPLAY):
@@ -132,6 +136,7 @@ public class Display extends JPanel{
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
+					running_schedule
 					// TODO Auto-generated method stub
 				}
 				

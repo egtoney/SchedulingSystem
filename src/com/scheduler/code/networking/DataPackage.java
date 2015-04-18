@@ -112,6 +112,7 @@ public class DataPackage {
 	}
 	
 	public int getDayOfYear(String dateString) {
+		System.out.println(dateString);
 			String[] date = dateString.split("_");
 			Calendar c = Calendar.getInstance();
 			c.set(Integer.parseInt(date[2]), Integer.parseInt(date[0])-1, Integer.parseInt(date[1]));
