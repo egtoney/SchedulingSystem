@@ -19,6 +19,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import com.scheduler.code.Main;
+import com.scheduler.code.employees.Employee;
 import com.scheduler.code.networking.DataPackage;
 import com.scheduler.code.networking.Networking;
 import com.scheduler.code.scheduler.EmployeeTimeSlot;
@@ -135,6 +136,26 @@ public class Display extends JPanel{
 				public void actionPerformed(ActionEvent arg0) {
 					//running_schedule
 					// TODO Auto-generated method stub
+					LinkedList<String> position_list = new LinkedList<String>(); position_list.add("cook"); position_list.add("customer service"); position_list.add("window"); position_list.add("lobby");
+					LinkedList<EmployeeTimeSlot> monday = new LinkedList<EmployeeTimeSlot>();
+					LinkedList<EmployeeTimeSlot> tuesday = new LinkedList<EmployeeTimeSlot>();
+					LinkedList<EmployeeTimeSlot> wednesday = new LinkedList<EmployeeTimeSlot>();
+					LinkedList<EmployeeTimeSlot> thursday = new LinkedList<EmployeeTimeSlot>();
+					LinkedList<EmployeeTimeSlot> friday = new LinkedList<EmployeeTimeSlot>();
+					LinkedList<EmployeeTimeSlot> saturday = new LinkedList<EmployeeTimeSlot>();
+					LinkedList<EmployeeTimeSlot> sunday = new LinkedList<EmployeeTimeSlot>();
+					
+					LinkedList<Employee> employee_list = data.getEmployeeList();
+					thursday = RawSchedule.generateSchedule("thursday" , position_list, thursday, employee_list);
+					monday = RawSchedule.generateSchedule("monday" , position_list, monday, employee_list);
+					friday = RawSchedule.generateSchedule("friday" , position_list, friday, employee_list);
+					wednesday = RawSchedule.generateSchedule("wednesday" , position_list, wednesday, employee_list);
+					tuesday = RawSchedule.generateSchedule("tuesday" , position_list, tuesday, employee_list);
+					sunday = RawSchedule.generateSchedule("sunday" , position_list, sunday, employee_list);
+					saturday = RawSchedule.generateSchedule("saturday" , position_list, saturday, employee_list);
+					
+					RawSchedule r = new RawSchedule(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+					running_schedule = r;
 				}
 				
 			});
